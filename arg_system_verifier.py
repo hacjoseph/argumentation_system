@@ -19,15 +19,13 @@ class ArgSystemVerifier:
         return chain.from_iterable(combinations(s,r) for r in range(len(s)+1))
     
     def is_no_conflit(self,af, subset):
-        """_summary_
+        """Cette méthode permet de vérifier si un sous-ensemble est sans conflit
 
         Args:
             af : System d'argumentation 
             subset : Sous ensemble des enguments dont on veut verifier s'il est sans conflit ou pas.
         """
-        
-        # convertir le sunset en ensemble pour une recherche plus rapide
-        
+        # convertir le subset en ensemble pour une recherche plus rapide
         subset_set = set(subset)
         for (a, b) in af.attacks:
             if a in subset_set and b in subset_set:
@@ -75,7 +73,8 @@ class ArgSystemVerifier:
             af (ArgSystemBuilder): système d'argumentation
 
         Returns:
-            La méthode retourne False s'il y'a un conflit dans le sous-ensemble sinon elle vérifie si tous les arguments sont défendu
+            La méthode retourne False s'il y'a un conflit dans le sous-ensemble 
+            sinon elle vérifie si tous les arguments sont défendu
         """
         
         if not self.is_no_conflit(af = af, subset = subset):
@@ -114,7 +113,6 @@ class ArgSystemVerifier:
         """
         complete_extentions = []
         for subset in self.all_admissible_sets(af):
-            # if self.is_admissible(subset=subset, argumentation_system=argumentation_system):
             defended_arguments = [
                 a for a in af.arguments if all(
                     (attacker, a) not in af.attacks or 

@@ -1,7 +1,6 @@
 import argparse
 from arg_system_builder import ArgSystemBuilder
 from arg_system_solver import ArgSystemSolver
-from rich import print
 
 def main():
     parser = argparse.ArgumentParser(description="Application permettant de resoudre les problèmes d'un Système d'argumentation AF")
@@ -14,7 +13,7 @@ def main():
     # Construction du système d'argumentation à partir fichier saisi en ligne de commande
     argumentatoin_system = ArgSystemBuilder.get_from_file(args.f)
     if argumentatoin_system is None:
-        print("[red]Impossible de continuer : le fichier n'exixte pas ou le chemin du fichier est incorrecte[/red]")
+        print("Impossible de continuer : le fichier n'exixte pas ou le chemin du fichier est incorrecte.")
     else:
         # Identification et résolution de problème
         problem = args.p.upper()
@@ -35,7 +34,7 @@ def main():
                 print("Il manque l'argument '-a' pour ce type de problème")
                 return
             elif args.a not in argumentatoin_system.arguments:
-                print(f"L'argument [red]'{args.a}'[/red] n'existe pas dans le systeme d'argumentation. Ensemble des arguments: [green]{argumentatoin_system.arguments}[/green]")
+                print(f"L'argument '{args.a}' n'existe pas dans le systeme d'argumentation. Ensemble des arguments: {argumentatoin_system.arguments}")
                 return
             
             argument = args.a
@@ -48,9 +47,9 @@ def main():
             elif problem == "DS-ST":
                 result = ArgSystemSolver.ds_st(af=argumentatoin_system, argument=argument)
             
-            print("[bold green] YES [/bold green]" if result else "[bold red] NO [/bold red]")
+            print("YES " if result else "NO ")
         else:
-            print("[red]Le type de problème est inconnu.[/red] [green]Les différents types de problèmes: SE-XX, DC-XX ou DS-XX. XX= CO ou ST[/green]")
+            print("Type de problème inconnu.Les différents types de problèmes sont: SE-XX, DC-XX ou DS-XX. XX= CO ou ST")
 
 if __name__== "__main__":
     main()
